@@ -1,4 +1,4 @@
-import{ Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -15,7 +15,8 @@ const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  
+  console.log("Some Changes from akash branch");
+
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
@@ -35,14 +36,14 @@ function App() {
           <Route element={<DefaultLayout />}>
             <Route index element={<ECommerce />} />
             {routes.map((route, index) => {
-              const { path, component: Component,roles }:any = route;
+              const { path, component: Component, roles }: any = route;
               return (
                 <Route
                   key={index}
                   path={path}
                   element={
                     <Suspense fallback={<Loader />}>
-                      <RouteGuard roles={roles} element = { <Component />}/>
+                      <RouteGuard roles={roles} element={<Component />} />
                     </Suspense>
                   }
                 />
