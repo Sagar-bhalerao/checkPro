@@ -15,7 +15,7 @@ const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  console.log("hello from the sagar branch")
+  console.log("hello from the sagar branch");
   
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
