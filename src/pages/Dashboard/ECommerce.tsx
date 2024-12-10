@@ -1,6 +1,8 @@
 
+import { Link } from 'react-router-dom';
 import ChartOne from '../../components/ChartOne.tsx';
 import Logo from "../../images/home page .png"
+import { FaArrowRight } from 'react-icons/fa';
 
 
 const ECommerce = () => {
@@ -113,6 +115,7 @@ const ECommerce = () => {
 
   const userData: any = localStorage.getItem('userData');
   const role = JSON.parse(userData);
+  
   return (
     <>
    
@@ -120,15 +123,21 @@ const ECommerce = () => {
  
   <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
     <div>
-      <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">Start your journey with <span className="text-primary">CheckPro!</span></h1>
+      <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">Stay updated Stay relevent with <span className="text-primary">CheckPro!</span></h1>
       <p className="mt-3 text-lg text-gray-800 dark:text-neutral-400">Your Trusted Destination for Quality Groceries and Daily Essentials.</p>
 
    
       <div className="mt-7 grid gap-3 w-full sm:inline-flex">
         
-        <a className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#">
-          Get Started
-        </a>
+        <Link
+              to="/transaction/FAQ"
+              className="inline-flex items-center rounded-lg justify-center gap-2.5 bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              <span>
+              <FaArrowRight size={20} />
+              </span>
+             Get Started
+            </Link>
       </div>
     
 
