@@ -4,7 +4,7 @@
   "version": "1.0.5",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 192.168.179.25",
+    "dev": "vite --host 192.168.179.23",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
+    "aos": "^2.3.4",
     "apexcharts": "^3.41.0",
     "axios": "^1.7.8",
     "headlessui": "^0.0.0",
@@ -31,6 +32,7 @@
     "sort-by": "^0.0.2"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@types/react": "^18.2.17",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",

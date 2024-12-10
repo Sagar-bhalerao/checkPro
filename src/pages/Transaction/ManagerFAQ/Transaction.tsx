@@ -15,7 +15,7 @@ import NoData from "../../../images/FallBack.png";
 const Transaction = () => {
   const [data, setData] = useState([]);
   const [answers, setAnswers] = useState({});
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const questionRefs: any = useRef([]);
   const [questionStatus, setQuestionStatus] = useState<any>([]);
 
@@ -24,7 +24,7 @@ const Transaction = () => {
   const navigate = useNavigate();
 
   let week = '';
-  
+
   const handleGetQuestions = async (flag: string) => {
     if (flag === 'Regular') {
       let body = {
@@ -35,8 +35,8 @@ const Transaction = () => {
       const response = await GetQuestions(body);
       setData(response);
       setLoading(false);
-      questionRefs.current = response.map((_:any,index:any)=>questionRefs.current[index] || React.createRef(),)
-     
+      questionRefs.current = response.map((_: any, index: any) => questionRefs.current[index] || React.createRef(),)
+
     } else {
       let body = {
         u_role: name.userRole,
@@ -45,8 +45,8 @@ const Transaction = () => {
       setLoading(true);
       const response = await GetQuestions(body);
       setData(response);
-      setLoading(false);      
-     
+      setLoading(false);
+
     }
   };
 
@@ -73,8 +73,8 @@ const Transaction = () => {
     }));
   };
 
-  const handleQuestionClick = (index: any) => {   
-    questionRefs?.current[index -1 ].current.scrollIntoView({
+  const handleQuestionClick = (index: any) => {
+    questionRefs?.current[index - 1].current.scrollIntoView({
       behavior: 'smooth',
     });
   };
@@ -127,7 +127,7 @@ const Transaction = () => {
     fetchData();
   }, []);
 
-  let status: string[] = questionStatus.map(({ q_id }: any) =>  q_id);
+  let status: string[] = questionStatus.map(({ q_id }: any) => q_id);
   console.log(status);
 
   // fweek
@@ -185,28 +185,28 @@ const Transaction = () => {
   if (data === undefined || null) {
     return (
       <div className="flex-row justify-center items-center font-bold text-2xl">
-           <Link
-            to={"/master/viewprogress"}
-              className="inline-flex items-center h-3 justify-center gap-2.5 rounded-full bg-bodydark text-black-2 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              <span>
-              <IoArrowBackSharp size={20} />
-              </span>
-              Go Back
-            </Link>
+        <Link
+          to={"/master/viewprogress"}
+          className="inline-flex items-center h-3 justify-center gap-2.5 rounded-full bg-bodydark text-black-2 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          <span>
+            <IoArrowBackSharp size={20} />
+          </span>
+          Go Back
+        </Link>
         <button className="inline-flex">Go Back</button>
         <div className='flex justify-center animate-pulse mt-3'>
-        <img src={NoData} className=" h-[400px] w-[400px] flex justify-center rounded-2xl"/>
+          <img src={NoData} className=" h-[400px] w-[400px] flex justify-center rounded-2xl" />
         </div>
       </div>
 
     );
-    
+
   }
   return (
     <>
       {/* toggle the week  */}
-        <h1 className='flex justify-center mb-2  font-semibold'>Select Question Type :-</h1>
+      <h1 className='flex justify-center mb-2  font-semibold'>Select Question Type :-</h1>
       <div className="flex justify-center mb-3">
         <button
           onClick={() => handleGetQuestions('Regular')}
@@ -224,57 +224,57 @@ const Transaction = () => {
         </button>
       </div>
 
-      {loading ? <Loader/> : (<>
+      {loading ? <Loader /> : (<>
         <div className="flex flex-wrap mb-4">
-        {data.map((item:any, index) => 
-        {
-           const status:any = questionStatus.find((q:any)=> q.q_id === item.id)?.q_flag;          
-          return (
-          <button
-            key={index}
-            onClick={() => handleQuestionClick(index)}
-            className={`mx-1 my-1 px-2 py-1 
-              ${status === "InCompleted" ? "bg-danger" : 
-              status === "InProgress" ? "bg-warning" : 
-              status === "Completed" ? "bg-success" : 
-              "bg-body"} 
-              text-white rounded`}           
-                        
-          >
-            {index + 1}
-          </button>
-)})}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data.map((item: any, index:any) => {
-          const status:any = questionStatus.find((q:any)=> q.q_id === item.id)?.q_flag
-          return(
-          <div key={item.id} ref={questionRefs.current[index]} className={`p-2 ` } >
-            <ChartThree
-              Qstatus = {questionStatus}
-              id={item.id}
-              index = {index +1}
-              question={item.question}
-              onAnswerChange={handleAnswerChange}
-            />
-          </div>)
-})}
+          {data.map((item: any, index) => {
+            const status: any = questionStatus.find((q: any) => q.q_id === item.id)?.q_flag;
+            return (
+              <button
+                key={index}
+                onClick={() => handleQuestionClick(index)}
+                className={`mx-1 my-1 px-2 py-1 
+              ${status === "InCompleted" ? "bg-danger" :
+                    status === "InProgress" ? "bg-warning" :
+                      status === "Completed" ? "bg-success" :
+                        "bg-body"} 
+              text-white rounded`}
 
-        {data.length > 0 && (<div className="">
-          <button
-            className="rounded-lg inline-flex items-center justify-center gap-2.5 bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            onClick={handleSubmit}
-          >
-            <span>
-              <FaRegCheckCircle size={20} />
-            </span>
-            Submit
-          </button>
-        </div>) }
-        
-      </div>
-      </>) }
-      
+              >
+                {index + 1}
+              </button>
+            )
+          })}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {data.map((item: any, index: any) => {
+            const status: any = questionStatus.find((q: any) => q.q_id === item.id)?.q_flag
+            return (
+              <div key={item.id} ref={questionRefs.current[index]} className={`p-2 `} >
+                <ChartThree
+                  Qstatus={questionStatus}
+                  id={item.id}
+                  index={index + 1}
+                  question={item.question}
+                  onAnswerChange={handleAnswerChange}
+                />
+              </div>)
+          })}
+
+          {data.length > 0 && (<div className="">
+            <button
+              className="rounded-lg inline-flex items-center justify-center gap-2.5 bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              onClick={handleSubmit}
+            >
+              <span>
+                <FaRegCheckCircle size={20} />
+              </span>
+              Submit
+            </button>
+          </div>)}
+
+        </div>
+      </>)}
+
     </>
   );
 };
