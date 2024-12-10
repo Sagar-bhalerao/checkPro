@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserOne from '../images/Satuu Don.jpg';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+
+
 import { CgProfile } from "react-icons/cg";
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -29,7 +29,7 @@ const DropdownUser = () => {
 
   // close if the esc key is pressed
   useEffect(() => {
-    const keyHandler = ({ keyCode }: KeyboardEvent) => {
+    const keyHandler = ({ keyCode }: KeyboardEvent) => {      
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
@@ -40,8 +40,6 @@ const DropdownUser = () => {
   //get state to bind user info
   const userData:any = localStorage.getItem('userData');
   const name = JSON.parse(userData);
-  console.log(name); 
-
 
 
   return (
@@ -55,13 +53,14 @@ const DropdownUser = () => {
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
           {name?.userFName} {name?.userLName}
+
           </span>
           <span className="block text-xs">{name?.userRole}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
           {/* <img className='rounded-full' src={UserOne} alt="User" /> */}
-          <CgProfile className='rounded-full ml-2' size={40} />
+          {name.userFName ? (<span className='flex bg-body text-white rounded-full h-10 justify-center items-center text-center relative top-1'>{ `${name.userFName.charAt(0)} ${name.userLName.charAt(0)}` }</span>):<CgProfile className='rounded-full ml-2' size={40} />} 
         </span>
 
         <svg
