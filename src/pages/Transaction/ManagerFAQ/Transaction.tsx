@@ -10,45 +10,53 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../../../common/Loader';
 import { IoArrowBackSharp } from 'react-icons/io5';
-import NoData from "../../../images/FallBack.png";
+import NoData from '../../../images/FallBack.png';
 
 const Transaction = () => {
   const [data, setData] = useState([]);
   const [answers, setAnswers] = useState({});
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const questionRefs: any = useRef([]);
   const [questionStatus, setQuestionStatus] = useState<any>([]);
+  const [weekNumber, setWeekNumber] = useState(0);
 
   const userData: any = localStorage.getItem('userData');
   const name = JSON.parse(userData);
   const navigate = useNavigate();
 
   let week = '';
-  
+
   const handleGetQuestions = async (flag: string) => {
-    if (flag === 'Regular') {
-      let body = {
-        u_role: name.userRole,
-        week: 'Regular',
-      };
-      setLoading(true);
-      const response = await GetQuestions(body);
-      setData(response);
-      setLoading(false);
-      questionRefs.current = response.map((_:any,index:any)=>questionRefs.current[index] || React.createRef(),)
-     
-    } else {
-      let body = {
-        u_role: name.userRole,
-        week: week,
-      };
-      setLoading(true);
-      const response = await GetQuestions(body);
-      setData(response);
-      setLoading(false);      
-     
+    try {
+      if (flag === 'Regular') {
+        let body = {
+          u_role: name.userRole,
+          week: 'Regular',
+        };
+        setLoading(true);
+        const response = await GetQuestions(body);
+        setData(response);
+        setLoading(false);
+        questionRefs.current = response.map(
+          (_: any, index: any) =>
+            questionRefs.current[index] || React.createRef(),
+        );
+      } else {
+        let body = {
+          u_role: name.userRole,
+          week: week,
+        };
+        setLoading(true);
+        const response = await GetQuestions(body);
+        setData(response);
+        setLoading(false);
+      }
+    } catch (error: any) {
+     toast.error(error.response.data.message);
     }
   };
+
+
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -73,8 +81,8 @@ const Transaction = () => {
     }));
   };
 
-  const handleQuestionClick = (index: any) => {   
-    questionRefs?.current[index -1 ].current.scrollIntoView({
+  const handleQuestionClick = (index: any) => {
+    questionRefs?.current[index - 1].current.scrollIntoView({
       behavior: 'smooth',
     });
   };
@@ -103,7 +111,7 @@ const Transaction = () => {
 
     try {
       const response = await axios.post(
-        'http://192.168.179.23:3001/transactions',
+        'http://192.168.179.23:3002/transactions',
         formData,
       );
       if (response.status === 200) {
@@ -127,30 +135,52 @@ const Transaction = () => {
     fetchData();
   }, []);
 
-  let status: string[] = questionStatus.map(({ q_id }: any) =>  q_id);
-  console.log(status);
+  // let status: string[] = questionStatus.map(({ q_id }: any) => q_id);
+  
 
   // fweek
-  const getWeekNumber = (date: any) => {
-    const currentDate: any = new Date(date);
-    const startOfMonth: any = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      1,
-    );
-    const days = Math.floor(
-      (currentDate - startOfMonth) / (24 * 60 * 60 * 1000),
-    );
-    const weekNumber = Math.ceil((days + startOfMonth.getDay() + 1) / 7);
-    return weekNumber;
-  };
+  // const getWeekNumber = (date: any) => {
+  //   const currentDate: any = new Date(date);
+  //   const startOfMonth: any = new Date(
+  //     currentDate.getFullYear(),
+  //     currentDate.getMonth(),
+  //     1,
+  //   );
+  //   const days = Math.floor(
+  //     (currentDate - startOfMonth) / (24 * 60 * 60 * 1000),
+  //   );
+  //   const weekNumber = Math.ceil((days + startOfMonth.getDay() + 1) / 7);
+  //   return weekNumber;
+  // };
 
   // Example usage
-  const currentDate = new Date().toISOString().slice(0, 10);
-  const weekNum: any = getWeekNumber(currentDate);
-  console.log(weekNum); // Outputs: week number of the month
+  // const currentDate = new Date().toISOString().slice(0, 10);
+  // const weekNum: any = getWeekNumber(currentDate);
 
-  const [weekNumber, setWeekNumber] = useState(0);
+  if (data === undefined || data === null) {
+    return (
+      <div className="flex-row justify-center items-center font-bold text-2xl">
+        <Link
+          to={'/master/viewprogress'}
+          className="inline-flex items-center h-3 justify-center gap-2.5 rounded-full bg-bodydark text-black-2 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          <span>
+            <IoArrowBackSharp size={20} />
+          </span>
+          Go Back
+        </Link>
+        <button className="inline-flex">Go Back</button>
+        <div className="flex justify-center animate-pulse mt-3">
+          <img
+            src={NoData}
+            className=" h-[400px] w-[400px] flex justify-center rounded-2xl"
+          />
+        </div>
+      </div>
+    );
+  }
+
+
   useEffect(() => {
     const getWeekNumber = (date: any) => {
       const currentDate: any = new Date(date);
@@ -181,32 +211,12 @@ const Transaction = () => {
     week = 'regular';
   }
 
-
-  if (data === undefined || null) {
-    return (
-      <div className="flex-row justify-center items-center font-bold text-2xl">
-           <Link
-            to={"/master/viewprogress"}
-              className="inline-flex items-center h-3 justify-center gap-2.5 rounded-full bg-bodydark text-black-2 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              <span>
-              <IoArrowBackSharp size={20} />
-              </span>
-              Go Back
-            </Link>
-        <button className="inline-flex">Go Back</button>
-        <div className='flex justify-center animate-pulse mt-3'>
-        <img src={NoData} className=" h-[400px] w-[400px] flex justify-center rounded-2xl"/>
-        </div>
-      </div>
-
-    );
-    
-  }
   return (
     <>
       {/* toggle the week  */}
-        <h1 className='flex justify-center mb-2  font-semibold'>Select Question Type :-</h1>
+      <h1 className="flex justify-center mb-2  font-semibold">
+        Select Question Type :-
+      </h1>
       <div className="flex justify-center mb-3">
         <button
           onClick={() => handleGetQuestions('Regular')}
@@ -224,57 +234,72 @@ const Transaction = () => {
         </button>
       </div>
 
-      {loading ? <Loader/> : (<>
-        <div className="flex flex-wrap mb-4">
-        {data.map((item:any, index) => 
-        {
-           const status:any = questionStatus.find((q:any)=> q.q_id === item.id)?.q_flag;          
-          return (
-          <button
-            key={index}
-            onClick={() => handleQuestionClick(index)}
-            className={`mx-1 my-1 px-2 py-1 
-              ${status === "InCompleted" ? "bg-danger" : 
-              status === "InProgress" ? "bg-warning" : 
-              status === "Completed" ? "bg-success" : 
-              "bg-body"} 
-              text-white rounded`}           
-                        
-          >
-            {index + 1}
-          </button>
-)})}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data.map((item: any, index:any) => {
-          const status:any = questionStatus.find((q:any)=> q.q_id === item.id)?.q_flag
-          return(
-          <div key={item.id} ref={questionRefs.current[index]} className={`p-2 ` } >
-            <ChartThree
-              Qstatus = {questionStatus}
-              id={item.id}
-              index = {index +1}
-              question={item.question}
-              onAnswerChange={handleAnswerChange}
-            />
-          </div>)
-})}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="flex flex-wrap mb-4">
+            {data?.map((item: any, index) => {
+              const status: any = questionStatus.find(
+                (q: any) => q.q_id === item.id,
+              )?.q_flag;
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleQuestionClick(index)}
+                  className={`mx-1 my-1 px-2 py-1 
+              ${
+                status === 'InCompleted'
+                  ? 'bg-danger'
+                  : status === 'InProgress'
+                  ? 'bg-warning'
+                  : status === 'Completed'
+                  ? 'bg-success'
+                  : 'bg-body'
+              } 
+              text-white rounded`}
+                >
+                  {index + 1}
+                </button>
+              );
+            })}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {data?.map((item: any, index: any) => {
+              // const status:any = questionStatus.find((q:any)=> q.q_id === item.id)?.q_flag
+              return (
+                <div
+                  key={item.id}
+                  ref={questionRefs.current[index]}
+                  className={`p-2 `}
+                >
+                  <ChartThree
+                    Qstatus={questionStatus}
+                    id={item.id}
+                    index={index + 1}
+                    question={item.question}
+                    onAnswerChange={handleAnswerChange}
+                  />
+                </div>
+              );
+            })}
 
-        {data.length > 0 && (<div className="">
-          <button
-            className="rounded-lg inline-flex items-center justify-center gap-2.5 bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            onClick={handleSubmit}
-          >
-            <span>
-              <FaRegCheckCircle size={20} />
-            </span>
-            Submit
-          </button>
-        </div>) }
-        
-      </div>
-      </>) }
-      
+            {data?.length > 0 && (
+              <div className="">
+                <button
+                  className="rounded-lg inline-flex items-center justify-center gap-2.5 bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                  onClick={handleSubmit}
+                >
+                  <span>
+                    <FaRegCheckCircle size={20} />
+                  </span>
+                  Submit
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 };

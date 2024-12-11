@@ -19,15 +19,15 @@ const ViewProgress = () => {
     return (
       <div className="flex-row justify-center items-center font-bold text-2xl">
            <Link
-            to={"/master/viewprogress"}
-              className="inline-flex items-center h-3 justify-center gap-2.5 rounded-full bg-bodydark text-black-2 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            to={"/"}
+              className="inline-flex items-center h-3 justify-center gap-2.5 rounded-full bg-bodydark  py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               <span>
               <IoArrowBackSharp size={20} />
               </span>
               Go Back
             </Link>
-        <button className="inline-flex">Go Back</button>
+       
         <div className='flex justify-center animate-pulse mt-3'>
         <img src={NoData} className=" h-[400px] w-[400px] flex justify-center rounded-2xl"/>
         </div>

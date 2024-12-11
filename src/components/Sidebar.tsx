@@ -8,7 +8,7 @@ import { TbProgressCheck } from 'react-icons/tb';
 import { MdGroups } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import {  FaRegQuestionCircle } from 'react-icons/fa';
+import {  FaRegEdit, FaRegQuestionCircle } from 'react-icons/fa';
 import { IoHomeOutline } from 'react-icons/io5';
 
 interface SidebarProps {
@@ -66,7 +66,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const UserData: any = localStorage.getItem('userData');
   const roles: any = JSON.parse(UserData);
-  console.log(roles.userRole);
+  
   
   
 
@@ -202,7 +202,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/' ||
-                            pathname.includes('dashboard')) &&
+                            pathname.includes('master')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -239,6 +239,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                        <li onClick={() => setSidebarOpen(!sidebar)}>
+                            <NavLink
+                              to="/master/FAQ"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              <span >
+                              <FaRegEdit size={19} />
+                              </span>
+                             FAQ
+                            </NavLink>
+                          </li>
                           <li onClick={() => setSidebarOpen(!sidebar)}>
                             <NavLink
                               to="/transaction/member"
@@ -250,7 +264,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <span>
                                 <MdGroups size={20} />
                               </span>
-                              Member
+                              Members
                             </NavLink>
                           </li>
                           <li onClick={() => setSidebarOpen(!sidebar)}>
@@ -278,7 +292,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
            
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/' || pathname.includes('master')
+                  pathname === '/' || pathname.includes('transaction')
                 }
               >
                 {(handleClick, open) => {
@@ -288,7 +302,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/' ||
-                            pathname.includes('dashboard')) &&
+                            pathname.includes('transaction')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
