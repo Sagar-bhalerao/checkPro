@@ -22,7 +22,7 @@ const FilledCheckList = () => {
     return (
       <div className="flex-row justify-center items-center font-bold text-2xl">
            <Link
-            to={"/master/viewprogress"}
+            to={"/"}
               className="inline-flex items-center h-3 justify-center gap-2.5 rounded-full bg-bodydark text-black-2 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               <span>
@@ -130,7 +130,7 @@ const FilledCheckList = () => {
           </button>
         </div>
       </div>
-      {data.length === 0 ? (
+      {data?.length === 0 ? (
         <h1 className="flex justify-center font-bold text-xl">No Data Found .</h1>
       ) : (
         <FilledTable

@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+const FAQ = lazy(()=>import('../pages/Master/FAQ'));
 const AdminFAQ = lazy(() => import('../pages/Transaction/AdminFAQ/AdminFAQ'));
 
 const FilledCheckList = lazy(() => import('../pages/Master/FilledCheckList'));
@@ -14,7 +15,7 @@ const Settings = lazy(() => import('../pages/Settings'));
 const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
-const Member = lazy(() => import('../pages/Transaction/Member'));
+const Member = lazy(() => import('../pages/Master/Member'));
 const Transaction = lazy(() => import('../pages/Transaction/ManagerFAQ/Transaction'));
 
 const coreRoutes = [
@@ -81,6 +82,13 @@ const coreRoutes = [
     path: '/transaction/AFAQ',
     title: 'Admin FAQ',
     component: AdminFAQ,
+    // roles:["Admin","Manager"]
+  },
+
+  {
+    path: '/master/FAQ',
+    title: 'FAQ Master',
+    component: FAQ,
     // roles:["Admin","Manager"]
   },
   {

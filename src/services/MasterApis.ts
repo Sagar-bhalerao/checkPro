@@ -12,3 +12,13 @@ export const GetFilledChecklist = async (data: any) => {
     toast.error(error.response.data.message);
   }
 };
+
+//get membersall
+export const GetAllMembers = async () => {
+  try {
+    const response = await axios.get(`${BaseURl}/get-users`);
+    return response.data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+  }
+};
