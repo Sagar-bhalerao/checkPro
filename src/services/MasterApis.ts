@@ -16,7 +16,7 @@ export const GetFilledChecklist = async (data: any) => {
 //get membersall
 export const GetAllMembers = async () => {
   try {
-    const response = await axios.get(`${BaseURl}/get-users`);
+    const response = await axios.get(`${BaseURl}/get-Users`);
     return response.data;
   } catch (error: any) {
     toast.error(error.response.data.message);
